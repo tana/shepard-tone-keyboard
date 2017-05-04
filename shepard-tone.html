@@ -1,0 +1,35 @@
+<?DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>shepard tone</title>
+    <script type="text/javascript" src="shepard-tone.js"></script>
+    <link rel="stylesheet" type="text/css" href="keyboard.css">
+  </head>
+  <body>
+    <svg id="keyboard" width="360" height="240">
+      <g transform="translate(5, 5)">
+        <rect class="whitekey" x="0" y="0" width="50" height="200" id="C"/>
+        <rect class="whitekey" x="50" y="0" width="50" height="200" id="D"/>
+        <rect class="whitekey" x="100" y="0" width="50" height="200" id="E"/>
+        <rect class="whitekey" x="150" y="0" width="50" height="200" id="F"/>
+        <rect class="whitekey" x="200" y="0" width="50" height="200" id="G"/>
+        <rect class="whitekey" x="250" y="0" width="50" height="200" id="A"/>
+        <rect class="whitekey" x="300" y="0" width="50" height="200" id="B"/>
+
+        <rect class="blackkey" x="35" y="0" width="30" height="150" id="Csharp" />
+        <rect class="blackkey" x="85" y="0" width="30" height="150" id="Dsharp" />
+        <rect class="blackkey" x="185" y="0" width="30" height="150" id="Fsharp" />
+        <rect class="blackkey" x="235" y="0" width="30" height="150" id="Gsharp" />
+        <rect class="blackkey" x="285" y="0" width="30" height="150" id="Asharp" />
+      </g>
+    </svg>
+    <div>
+      <label for="attack">Attack</label><input type="range" id="attack" min="0.0" max="1.0" step="0.01">
+      <label for="decay">Decay</label><input type="range" id="decay" min="0.0" max="1.0" step="0.01">
+      <label for="sustain">Sustain</label><input type="range" id="sustain" min="0.0" max="1.0" step="0.01">
+      <label for="release">Release</label><input type="range" id="release" min="0.0" max="1.0" step="0.01">
+    </div>
+    <p>The keys D to L on a QWERTY keyboard correspond to the white keys. R, T, U, I, O correspond to the black keys.</p>
+  </body>
+</html>

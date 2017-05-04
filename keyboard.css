@@ -1,0 +1,11 @@
+.whitekey {
+  fill: white;
+  stroke: black;
+  stroke-width: 1;
+}
+
+.blackkey {
+  fill: black;
+  stroke: black;
+  stroke-width: 1;
+}
