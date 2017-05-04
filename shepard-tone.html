@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>shepard tone</title>
     <script type="text/javascript" src="shepard-tone.js"></script>
     <link rel="stylesheet" type="text/css" href="keyboard.css">
@@ -24,12 +25,24 @@
         <rect class="blackkey" x="285" y="0" width="30" height="150" id="Asharp" />
       </g>
     </svg>
-    <div>
-      <label for="attack">Attack</label><input type="range" id="attack" min="0.0" max="1.0" step="0.01">
-      <label for="decay">Decay</label><input type="range" id="decay" min="0.0" max="1.0" step="0.01">
-      <label for="sustain">Sustain</label><input type="range" id="sustain" min="0.0" max="1.0" step="0.01">
-      <label for="release">Release</label><input type="range" id="release" min="0.0" max="1.0" step="0.01">
+    <div id="adsr">
+      <p>
+        <label for="attack">Attack</label>
+        <input type="range" id="attack" min="0.0" max="1.0" step="0.01">
+      </p>
+      <p>
+        <label for="decay">Decay</label>
+        <input type="range" id="decay" min="0.0" max="1.0" step="0.01">
+      </p>
+      <p>
+        <label for="sustain">Sustain</label>
+        <input type="range" id="sustain" min="0.0" max="1.0" step="0.01">
+      </p>
+      <p>
+        <label for="release">Release</label>
+        <input type="range" id="release" min="0.0" max="1.0" step="0.01">
+      </p>
     </div>
-    <p>The keys D to L on a QWERTY keyboard correspond to the white keys. R, T, U, I, O correspond to the black keys.</p>
+    <p id="help">The keys D to L on a QWERTY keyboard correspond to the white keys. R, T, U, I, O correspond to the black keys.</p>
   </body>
 </html>

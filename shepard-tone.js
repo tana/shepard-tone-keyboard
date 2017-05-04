@@ -54,34 +54,7 @@ window.addEventListener("load", function() {
     }
 
     var note = keyCodeToNote[e.keyCode];
-    if (pressed[note]) {
-      return;
-    }
-    pressed[note] = true;
-
-    if (timers[note]) {
-      clearTimeout(timers[note]);
-      timers[note] = undefined;
-      oscillators[note].stop();
-      oscillators[note].disconnect();
-    }
-
-    var osc = actx.createOscillator();
-    osc.type = "sine";
-    osc.setPeriodicWave(shepardWave);
-    osc.frequency.value = freqs[note];
-    oscillators[note] = osc;
-
-    var gainNode = gains[note];
-    gainNode.gain.cancelScheduledValues(actx.currentTime);
-    gainNode.gain.value = 0.0;
-    gainNode.gain.linearRampToValueAtTime(1.0, actx.currentTime + attack);
-    gainNode.gain.linearRampToValueAtTime(sustain, actx.currentTime + attack + decay);
-
-    osc.connect(gainNode);
-    osc.start();
-
-    keyElems[note].style.fill = "red";
+    noteOn(note);
   });
 
   document.addEventListener("keyup", function(e) {
@@ -90,20 +63,7 @@ window.addEventListener("load", function() {
     }
 
     var note = keyCodeToNote[e.keyCode];
-    if (!pressed[note]) {
-      return;
-    }
-    pressed[note] = false;
-
-    gains[note].gain.cancelScheduledValues(actx.currentTime);
-    gains[note].gain.linearRampToValueAtTime(0.0, actx.currentTime + release);
-    timers[note] = setTimeout(function() {
-      timers[note] = undefined;
-      oscillators[note].stop();
-      oscillators[note].disconnect();
-    }, release * 1000);
-
-    keyElems[note].style.fill = "";
+    noteOff(note);
   });
 
   document.getElementById("attack").addEventListener("change", changeEnvelope);
@@ -115,7 +75,81 @@ window.addEventListener("load", function() {
   document.getElementById("decay").value = decay.toString();
   document.getElementById("sustain").value = sustain.toString();
   document.getElementById("release").value = release.toString();
+
+  // touch and mouse events
+  for (var i = 0; i < numKeys; i++) {
+    (function(note) {
+      keyElems[note].addEventListener("touchstart", function(e) {
+        noteOn(note);
+      });
+
+      keyElems[note].addEventListener("touchend", function(e) {
+        noteOff(note);
+      });
+
+      keyElems[note].addEventListener("touchmove", function(e) {
+        e.preventDefault();
+      }, false);
+
+      keyElems[note].addEventListener("mousedown", function(e) {
+        noteOn(note);
+      });
+
+      keyElems[note].addEventListener("mouseup", function(e) {
+        noteOff(note);
+      });
+
+    })(i);
+  }
 });
+
+function noteOn(note) {
+  if (pressed[note]) {
+    return;
+  }
+  pressed[note] = true;
+
+  if (timers[note]) {
+    clearTimeout(timers[note]);
+    timers[note] = undefined;
+    oscillators[note].stop();
+    oscillators[note].disconnect();
+  }
+
+  var osc = actx.createOscillator();
+  osc.type = "sine";
+  osc.setPeriodicWave(shepardWave);
+  osc.frequency.value = freqs[note];
+  oscillators[note] = osc;
+
+  var gainNode = gains[note];
+  gainNode.gain.cancelScheduledValues(actx.currentTime);
+  gainNode.gain.value = 0.0;
+  gainNode.gain.linearRampToValueAtTime(1.0, actx.currentTime + attack);
+  gainNode.gain.linearRampToValueAtTime(sustain, actx.currentTime + attack + decay);
+
+  osc.connect(gainNode);
+  osc.start();
+
+  keyElems[note].style.fill = "red";
+}
+
+function noteOff(note) {
+  if (!pressed[note]) {
+    return;
+  }
+  pressed[note] = false;
+
+  gains[note].gain.cancelScheduledValues(actx.currentTime);
+  gains[note].gain.linearRampToValueAtTime(0.0, actx.currentTime + release);
+  timers[note] = setTimeout(function() {
+    timers[note] = undefined;
+    oscillators[note].stop();
+    oscillators[note].disconnect();
+  }, release * 1000);
+
+  keyElems[note].style.fill = "";
+}
 
 // event handler for change in ADSR sliders
 function changeEnvelope() {

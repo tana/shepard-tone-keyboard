@@ -9,3 +9,15 @@
   stroke: black;
   stroke-width: 1;
 }
+
+#keyboard {
+  float: left;
+}
+
+#adsr {
+  float: left;
+}
+
+#help {
+  clear: left;
+}
